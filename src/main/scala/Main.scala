@@ -3,29 +3,48 @@ import Concurrent._
 
 object Main extends App {
 
-  val x01 = Concurrent((_: Unit => Action) => Stop).action
+  val x01 = Concurrent((_: Unit => Action) => Stop).action()
 
-//  val x2 = Concurrent((_: Unit => Action) => Fork(Stop(), Fork(Stop(), Stop()))).action
-//  val x3 = Concurrent((_ : Unit => Action) => Atom(putStr("Haskell")))
-//  val x45 = Concurrent((_: Unit => Action) => Atom(putStr("Haskell") andThen (_ => Stop()))).action
-//  val x6 = stop.action
-//  val x7 = stop
-//  val x8 = atom(putStrLn("Haskell")).action
-//  val x9 = atom(_ => ???).action
-//  val x10 = atom(putStr("Haskell"))
-//  val x11 = stop.fork.action
-//  val x1213 = atom(putStr("Haskell")).fork.action
-//  val x14 = ???.fork.action
-//  val x15 = par(stop(), stop()).action
-//  val x16 = par(atom(putStr("think")), atom(putStr("hack"))).action
-//  val x17 = par(stop(), stop.fork).action
-//  val x18 = par(atom(putChar('x')), stop.fork).action
-//  val x19 = stop.flatMap(c => stop[Unit]).action
-//  val x20 = atom(putStrLn("whatever...")).flatMap(stop).action
-//  val x2122 = stop.flatMap(stop)
-//  val x23 = stop.fork.flatMap(_ => stop.fork).action
-//  val x24 = ex0 run
-//  val x25 = ex1 run
+  println("x01: " + x01)
+
+  val x2 = Concurrent((_: Unit => Action) => Fork(Stop, Fork(Stop, Stop))).action()
+  println("x2: " + x2)
+
+//  val  x3 = Concurrent((_ : Unit => Action) => Atom(putStr("Haskell"))).action()
+  println("x3: Not compile")
+
+  val  x45 = Concurrent((_: Unit => Action) => Atom(putStr("Haskell") andThen (_ => Stop))).action()
+  println("x45: " + x45)
+
+  val  x6 = stop.action
+  println("x6: " + x6)
+
+  val  x7 = stop()
+  println("x7: " + x7)
+
+  val  x8 = atom(putStrLn("Haskell")).action()
+  println("x8: " + x8)
+
+//   val  x9 = atom(_ => ???).action()
+//  println("x9: " + x9)
+
+  val  x10 = atom(putStr("Haskell"))
+  println("x10: " + x10)
+
+
+  //   val  x11 = stop.fork.action
+//   val  x1213 = atom(putStr("Haskell")).fork.action
+//   val  x14 = ???.fork.action
+//   val  x15 = par(stop(), stop()).action
+//   val  x16 = par(atom(putStr("think")), atom(putStr("hack"))).action
+//   val  x17 = par(stop(), stop.fork).action
+//   val  x18 = par(atom(putChar('x')), stop.fork).action
+//   val  x19 = stop.flatMap(c => stop[Unit]).action
+//   val  x20 = atom(putStrLn("whatever...")).flatMap(stop).action
+//   val  x2122 = stop.flatMap(stop)
+//   val  x23 = stop.fork.flatMap(_ => stop.fork).action
+//   val  x24 = ex0 run
+//   val  x25 = ex1 run
 
   def ex0(): Concurrent[Unit] = par(loop(genRandom(1337)), loop(genRandom(2600)) andThen atom(putStrLn("")))
 
